@@ -1,0 +1,10 @@
+[gd_resource type="DynamicFont" load_steps=2 format=2]
+
+[ext_resource path="res://font/MYRIADPRO-REGULAR.OTF" type="DynamicFontData" id=1]
+
+[resource]
+size = 24
+outline_size = 1
+outline_color = Color( 0.858824, 0.513726, 0.0235294, 1 )
+use_filter = true
+font_data = ExtResource( 1 )

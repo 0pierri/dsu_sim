@@ -1,0 +1,464 @@
+[gd_scene load_steps=40 format=2]
+
+[ext_resource path="res://font/regular.tres" type="DynamicFont" id=1]
+[ext_resource path="res://scripts/Player.gd" type="Script" id=2]
+[ext_resource path="res://scripts/ScriptManager.gd" type="Script" id=3]
+[ext_resource path="res://scripts/PlayerCamera.gd" type="Script" id=4]
+[ext_resource path="res://scripts/Time.gd" type="Script" id=5]
+[ext_resource path="res://scripts/NamePlate.gd" type="Script" id=6]
+[ext_resource path="res://scripts/HealthBar.gd" type="Script" id=7]
+[ext_resource path="res://scripts/NPCManager.gd" type="Script" id=8]
+[ext_resource path="res://scenes/Friendly.tscn" type="PackedScene" id=9]
+[ext_resource path="res://textures/ui/button.png" type="Texture" id=10]
+[ext_resource path="res://textures/ui/button_hover.png" type="Texture" id=11]
+[ext_resource path="res://textures/ui/button_press.png" type="Texture" id=12]
+[ext_resource path="res://textures/entities/estinien.png" type="Texture" id=13]
+[ext_resource path="res://textures/environment/enemytarget.png" type="Texture" id=14]
+[ext_resource path="res://textures/environment/arena.png" type="Texture" id=15]
+[ext_resource path="res://textures/ui/playerhpfull.png" type="Texture" id=16]
+[ext_resource path="res://textures/ui/enemycastfull.png" type="Texture" id=17]
+[ext_resource path="res://textures/ui/playerhp.png" type="Texture" id=18]
+[ext_resource path="res://textures/ui/enemycast.png" type="Texture" id=19]
+[ext_resource path="res://scripts/EnemyCastBar.gd" type="Script" id=20]
+[ext_resource path="res://scripts/Boss.gd" type="Script" id=21]
+[ext_resource path="res://scripts/TextureLoader.gd" type="Script" id=22]
+[ext_resource path="res://scripts/Mech.gd" type="Script" id=23]
+[ext_resource path="res://font/MYRIADPRO-REGULAR.OTF" type="DynamicFontData" id=24]
+[ext_resource path="res://font/MYRIADPRO-BOLD.OTF" type="DynamicFontData" id=25]
+[ext_resource path="res://scripts/StartButton.gd" type="Script" id=26]
+[ext_resource path="res://scripts/ControlButtonLabel.gd" type="Script" id=27]
+[ext_resource path="res://scripts/PlayerStatus.gd" type="Script" id=28]
+[ext_resource path="res://scripts/PlayerStatusContainer.gd" type="Script" id=29]
+[ext_resource path="res://scripts/AOEManager.gd" type="Script" id=30]
+[ext_resource path="res://scripts/Pos.gd" type="Script" id=31]
+
+[sub_resource type="DynamicFont" id=10]
+use_filter = true
+font_data = ExtResource( 24 )
+
+[sub_resource type="DynamicFont" id=11]
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 24 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 96
+outline_size = 4
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 25 )
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 100, 1, 100 )
+
+[sub_resource type="CubeMesh" id=2]
+size = Vector3( 44, 2, 44 )
+
+[sub_resource type="Shader" id=3]
+code = "// NOTE: Shader automatically converted from Godot Engine 3.4.4.stable's SpatialMaterial.
+
+shader_type spatial;
+render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx;
+uniform vec4 albedo : hint_color;
+uniform sampler2D texture_albedo : hint_albedo;
+uniform float specular;
+uniform float metallic;
+uniform float roughness : hint_range(0,1);
+uniform float point_size : hint_range(0,128);
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+
+void vertex() {
+	UV=UV*uv1_scale.xy+uv1_offset.xy;
+}
+
+
+
+
+void fragment() {
+	vec2 base_uv = UV;
+	vec4 albedo_tex = texture(texture_albedo,base_uv);
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+	METALLIC = metallic;
+	ROUGHNESS = roughness;
+	SPECULAR = specular;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 3 )
+shader_param/albedo = Color( 1, 1, 1, 1 )
+shader_param/specular = 0.0
+shader_param/metallic = 0.0
+shader_param/roughness = 1.0
+shader_param/point_size = 1.0
+shader_param/uv1_scale = Vector3( 3, 2, 1 )
+shader_param/uv1_offset = Vector3( -1, 0, 0 )
+shader_param/uv2_scale = Vector3( 1, 1, 1 )
+shader_param/uv2_offset = Vector3( 0, 0, 0 )
+shader_param/texture_albedo = ExtResource( 15 )
+
+[sub_resource type="ViewportTexture" id=7]
+viewport_path = NodePath("PlayerNameViewport")
+
+[node name="Game" type="Spatial"]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Margin" type="MarginContainer" parent="UI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="Container" type="HBoxContainer" parent="UI/Margin"]
+margin_right = 1024.0
+margin_bottom = 600.0
+mouse_filter = 2
+
+[node name="Left" type="HBoxContainer" parent="UI/Margin/Container"]
+margin_right = 311.0
+margin_bottom = 600.0
+mouse_filter = 2
+size_flags_horizontal = 3
+
+[node name="Menu" type="VBoxContainer" parent="UI/Margin/Container/Left"]
+margin_right = 153.0
+margin_bottom = 600.0
+mouse_filter = 2
+size_flags_horizontal = 3
+
+[node name="StartButtonContainer" type="MarginContainer" parent="UI/Margin/Container/Left/Menu"]
+margin_right = 107.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 107, 25 )
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = -10
+
+[node name="StartButton" type="TextureButton" parent="UI/Margin/Container/Left/Menu/StartButtonContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 107.0
+margin_bottom = 35.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 10 )
+texture_pressed = ExtResource( 12 )
+texture_hover = ExtResource( 11 )
+expand = true
+script = ExtResource( 26 )
+
+[node name="Label" type="Label" parent="UI/Margin/Container/Left/Menu/StartButtonContainer/StartButton"]
+margin_left = 23.0
+margin_top = 2.0
+margin_right = 71.0
+margin_bottom = 26.0
+size_flags_horizontal = 4
+custom_fonts/font = SubResource( 10 )
+text = "Start"
+align = 1
+valign = 1
+
+[node name="ResetButtonContainer" type="MarginContainer" parent="UI/Margin/Container/Left/Menu"]
+margin_top = 29.0
+margin_right = 107.0
+margin_bottom = 54.0
+rect_min_size = Vector2( 107, 25 )
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = -10
+
+[node name="ResetButton" type="TextureButton" parent="UI/Margin/Container/Left/Menu/ResetButtonContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 107.0
+margin_bottom = 35.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 10 )
+texture_pressed = ExtResource( 12 )
+texture_hover = ExtResource( 11 )
+expand = true
+
+[node name="Label" type="Label" parent="UI/Margin/Container/Left/Menu/ResetButtonContainer/ResetButton"]
+margin_left = 23.0
+margin_top = 2.0
+margin_right = 71.0
+margin_bottom = 26.0
+size_flags_horizontal = 4
+custom_fonts/font = SubResource( 10 )
+text = "Reset"
+align = 1
+valign = 1
+
+[node name="DetailsContainer" type="MarginContainer" parent="UI/Margin/Container/Left/Menu"]
+margin_top = 58.0
+margin_right = 153.0
+margin_bottom = 130.0
+mouse_filter = 2
+custom_constants/margin_top = 16
+custom_constants/margin_left = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Margin/Container/Left/Menu/DetailsContainer"]
+margin_left = 12.0
+margin_top = 16.0
+margin_right = 153.0
+margin_bottom = 72.0
+mouse_filter = 2
+
+[node name="Time" type="Label" parent="UI/Margin/Container/Left/Menu/DetailsContainer/VBoxContainer"]
+margin_bottom = 16.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 11 )
+script = ExtResource( 5 )
+
+[node name="Mech" type="Label" parent="UI/Margin/Container/Left/Menu/DetailsContainer/VBoxContainer"]
+margin_top = 20.0
+margin_bottom = 36.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 11 )
+script = ExtResource( 23 )
+
+[node name="Pos" type="Label" parent="UI/Margin/Container/Left/Menu/DetailsContainer/VBoxContainer"]
+margin_top = 40.0
+margin_bottom = 56.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 11 )
+script = ExtResource( 31 )
+
+[node name="ControlButtonContainer" type="MarginContainer" parent="UI/Margin/Container/Left/Menu"]
+margin_top = 134.0
+margin_right = 107.0
+margin_bottom = 159.0
+rect_min_size = Vector2( 107, 25 )
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = -10
+
+[node name="ControlButton" type="TextureButton" parent="UI/Margin/Container/Left/Menu/ControlButtonContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 107.0
+margin_bottom = 35.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 10 )
+texture_pressed = ExtResource( 12 )
+texture_hover = ExtResource( 11 )
+expand = true
+
+[node name="Label" type="Label" parent="UI/Margin/Container/Left/Menu/ControlButtonContainer/ControlButton"]
+margin_top = 2.0
+margin_right = 97.0
+margin_bottom = 25.0
+size_flags_horizontal = 4
+custom_fonts/font = SubResource( 10 )
+text = "Standard"
+align = 1
+valign = 1
+script = ExtResource( 27 )
+
+[node name="PartyHealth" type="VBoxContainer" parent="UI/Margin/Container/Left"]
+margin_left = 157.0
+margin_top = 300.0
+margin_right = 311.0
+margin_bottom = 300.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="Center" type="VBoxContainer" parent="UI/Margin/Container"]
+margin_left = 315.0
+margin_right = 708.0
+margin_bottom = 600.0
+mouse_filter = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Margin/Container/Center"]
+margin_right = 393.0
+margin_bottom = 422.0
+mouse_filter = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 5.0
+
+[node name="BossDetails" type="MarginContainer" parent="UI/Margin/Container/Center"]
+margin_top = 426.0
+margin_right = 393.0
+margin_bottom = 511.0
+rect_pivot_offset = Vector2( -1114, -317 )
+mouse_filter = 2
+size_flags_vertical = 3
+
+[node name="BossCastBar" type="TextureProgress" parent="UI/Margin/Container/Center/BossDetails"]
+margin_top = 29.0
+margin_right = 393.0
+margin_bottom = 56.0
+mouse_filter = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+step = 0.001
+texture_under = ExtResource( 19 )
+texture_progress = ExtResource( 17 )
+script = ExtResource( 20 )
+
+[node name="Text" type="Label" parent="UI/Margin/Container/Center/BossDetails/BossCastBar"]
+anchor_right = 1.0
+margin_right = -8.0
+margin_bottom = 32.0
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 1 )
+text = "Spell Name"
+align = 2
+valign = 2
+
+[node name="PlayerHealth" type="MarginContainer" parent="UI/Margin/Container/Center"]
+margin_top = 515.0
+margin_right = 393.0
+margin_bottom = 600.0
+mouse_filter = 2
+size_flags_horizontal = 5
+size_flags_vertical = 3
+script = ExtResource( 7 )
+
+[node name="Bar" type="TextureProgress" parent="UI/Margin/Container/Center/PlayerHealth"]
+margin_left = 103.0
+margin_right = 290.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+mouse_filter = 2
+size_flags_horizontal = 6
+size_flags_vertical = 0
+max_value = 10.0
+texture_under = ExtResource( 18 )
+texture_progress = ExtResource( 16 )
+
+[node name="Right" type="MarginContainer" parent="UI/Margin/Container"]
+margin_left = 712.0
+margin_right = 1024.0
+margin_bottom = 600.0
+mouse_filter = 2
+size_flags_horizontal = 3
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Margin/Container/Right"]
+margin_top = 10.0
+margin_right = 302.0
+margin_bottom = 600.0
+mouse_filter = 2
+
+[node name="Status" type="MarginContainer" parent="."]
+margin_right = 30.0
+margin_bottom = 25.0
+mouse_filter = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource( 29 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Status"]
+margin_bottom = 25.0
+size_flags_horizontal = 2
+script = ExtResource( 28 )
+
+[node name="PlayerNameViewport" type="Viewport" parent="."]
+size = Vector2( 540, 96 )
+transparent_bg = true
+render_target_v_flip = true
+script = ExtResource( 6 )
+
+[node name="PlayerNameLabel" type="Label" parent="PlayerNameViewport"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_fonts/font = SubResource( 6 )
+text = "Player Name"
+
+[node name="Arena" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0 )
+collision_layer = 0
+collision_mask = 0
+
+[node name="Floor" type="CollisionShape" parent="Arena"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, -0.5, 0 )
+shape = SubResource( 1 )
+
+[node name="FloorTexture" type="MeshInstance" parent="Arena"]
+transform = Transform( -1, 3.82137e-15, 8.74228e-08, -3.82137e-15, 1, -8.74228e-08, -8.74228e-08, -8.74228e-08, -1, 0, -0.5, 0 )
+mesh = SubResource( 2 )
+skeleton = NodePath("../Floor")
+material/0 = SubResource( 4 )
+
+[node name="AOEManager" type="Node" parent="."]
+script = ExtResource( 30 )
+
+[node name="Boss" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.511, 0 )
+script = ExtResource( 21 )
+
+[node name="Model" type="Sprite3D" parent="Boss"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.274, 0 )
+texture = ExtResource( 13 )
+
+[node name="Target" type="Sprite3D" parent="Boss"]
+transform = Transform( -4.1, 6.19083e-07, 6.60024e-15, 0, -1.79217e-07, 1, 6.19083e-07, 4.1, 4.37114e-08, -1.516, 0.001, -4.018 )
+offset = Vector2( 0, 43.368 )
+double_sided = false
+alpha_cut = 2
+texture = ExtResource( 14 )
+
+[node name="Friendlies" type="Spatial" parent="."]
+script = ExtResource( 8 )
+
+[node name="0" parent="Friendlies" instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.51, -9.198 )
+script = ExtResource( 2 )
+
+[node name="Name" type="Sprite3D" parent="Friendlies/0"]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 1, 0, 2.36168, 0 )
+billboard = 1
+texture = SubResource( 7 )
+
+[node name="CameraBase" type="Spatial" parent="Friendlies/0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.72174, 0 )
+script = ExtResource( 4 )
+
+[node name="CameraTilt" type="Spatial" parent="Friendlies/0/CameraBase"]
+transform = Transform( 1, 2.01695e-08, 2.35848e-09, -2.01695e-08, 0.973022, 0.230712, 2.35849e-09, -0.230712, 0.973022, 0, 0.495, 1.999 )
+
+[node name="Camera" type="Camera" parent="Friendlies/0/CameraBase/CameraTilt"]
+
+[node name="ScriptManager" type="Node" parent="."]
+script = ExtResource( 3 )
+
+[node name="TextureLoader" type="Node" parent="."]
+script = ExtResource( 22 )
+
+[connection signal="button_pressed" from="UI/Margin/Container/Left/Menu/StartButtonContainer/StartButton" to="ScriptManager" method="_on_StartButton_button_pressed"]
+[connection signal="pressed" from="UI/Margin/Container/Left/Menu/StartButtonContainer/StartButton" to="UI/Margin/Container/Left/Menu/StartButtonContainer/StartButton" method="_on_StartButton_pressed"]
+[connection signal="pressed" from="UI/Margin/Container/Left/Menu/ResetButtonContainer/ResetButton" to="UI/Margin/Container/Left/Menu/StartButtonContainer/StartButton" method="_on_ResetButton_pressed"]
+[connection signal="pressed" from="UI/Margin/Container/Left/Menu/ResetButtonContainer/ResetButton" to="UI/Margin/Container/Center/BossDetails/BossCastBar" method="_on_ResetButton_pressed"]
+[connection signal="pressed" from="UI/Margin/Container/Left/Menu/ResetButtonContainer/ResetButton" to="ScriptManager" method="_on_ResetButton_pressed"]
+[connection signal="pressed" from="UI/Margin/Container/Left/Menu/ControlButtonContainer/ControlButton" to="UI/Margin/Container/Left/Menu/ControlButtonContainer/ControlButton/Label" method="_on_ControlButton_pressed"]
+[connection signal="pressed" from="UI/Margin/Container/Left/Menu/ControlButtonContainer/ControlButton" to="Friendlies/0" method="_on_ControlButton_pressed"]
+[connection signal="pressed" from="UI/Margin/Container/Left/Menu/ControlButtonContainer/ControlButton" to="Friendlies/0/CameraBase" method="_on_ControlButton_pressed"]
+[connection signal="loaded" from="Friendlies" to="AOEManager" method="_on_Friendlies_loaded"]
+[connection signal="apply_status" from="ScriptManager" to="Status/HBoxContainer" method="_on_apply_status"]
+[connection signal="boss_cast" from="ScriptManager" to="UI/Margin/Container/Center/BossDetails/BossCastBar" method="_on_ScriptManager_boss_cast"]
+[connection signal="mech_dark_dive" from="ScriptManager" to="AOEManager" method="_on_mech_dark_dive"]
+[connection signal="mech_started" from="ScriptManager" to="UI/Margin/Container/Left/Menu/DetailsContainer/VBoxContainer/Mech" method="_on_ScriptManager_mech_started"]
+[connection signal="remove_status" from="ScriptManager" to="Status/HBoxContainer" method="_on_remove_status"]
+[connection signal="remove_status_all" from="ScriptManager" to="Status/HBoxContainer" method="_on_remove_status_all"]
+[connection signal="timer_changed" from="ScriptManager" to="UI/Margin/Container/Left/Menu/DetailsContainer/VBoxContainer/Time" method="_on_ScriptManager_timer_changed"]
+[connection signal="toggle_pause" from="ScriptManager" to="UI/Margin/Container/Center/BossDetails/BossCastBar" method="_on_ScriptManager_toggle_pause"]

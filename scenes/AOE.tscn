@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://textures/environment/aoe.png" type="Texture" id=1]
+[ext_resource path="res://scripts/AOE.gd" type="Script" id=2]
+
+[sub_resource type="CylinderShape" id=1]
+
+[node name="Area" type="Area"]
+collision_layer = 2
+input_ray_pickable = false
+script = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.02, 0 )
+opacity = 0.5
+pixel_size = 0.005
+alpha_cut = 2
+texture = ExtResource( 1 )

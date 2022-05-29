@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://scripts/Friendly.gd" type="Script" id=1]
+[ext_resource path="res://scripts/Effect.gd" type="Script" id=2]
+
+[sub_resource type="StreamTexture" id=2]
+flags = 23
+load_path = "res://.import/lala.png-6c84ba2ad35aff36ea222f6e141ff707.s3tc.stex"
+
+[sub_resource type="StreamTexture" id=3]
+flags = 23
+load_path = "res://.import/target.png-f853e98158e407164ab5ac77b2d8779d.s3tc.stex"
+
+[sub_resource type="CylinderShape" id=4]
+radius = 0.01
+
+[sub_resource type="SphereShape" id=5]
+radius = 0.0
+
+[node name="Friendly" type="KinematicBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.51, 0 )
+collision_mask = 2
+script = ExtResource( 1 )
+
+[node name="Model" type="Sprite3D" parent="."]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 1, 0, 1.19014, 0 )
+billboard = 2
+alpha_cut = 2
+texture = SubResource( 2 )
+
+[node name="Target" type="Sprite3D" parent="."]
+transform = Transform( 0.4, 0, 0, 0, -1.74846e-08, 1, 0, -0.4, -4.37114e-08, 0, 0.02, 0 )
+offset = Vector2( 0, 43.39 )
+double_sided = false
+alpha_cut = 2
+texture = SubResource( 3 )
+
+[node name="Effect" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.89675, 0 )
+pixel_size = 0.007
+billboard = 1
+script = ExtResource( 2 )
+
+[node name="CollisionArea" type="Area" parent="."]
+collision_mask = 2
+monitoring = false
+
+[node name="CollisionShape" type="CollisionShape" parent="CollisionArea"]
+shape = SubResource( 4 )
+
+[node name="Unused" type="CollisionShape" parent="."]
+shape = SubResource( 5 )
