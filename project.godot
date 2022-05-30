@@ -10,14 +10,19 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Area",
-"class": "AOE",
+"class": "AOEBase",
 "language": "GDScript",
-"path": "res://scripts/AOE.gd"
+"path": "res://scripts/AOEBase.gd"
 }, {
 "base": "Position3D",
 "class": "Boss",
 "language": "GDScript",
 "path": "res://scripts/Boss.gd"
+}, {
+"base": "AOEBase",
+"class": "Donut",
+"language": "GDScript",
+"path": "res://scripts/Donut.gd"
 }, {
 "base": "KinematicBody",
 "class": "Friendly",
@@ -48,16 +53,23 @@ _global_script_classes=[ {
 "class": "TextureLoader",
 "language": "GDScript",
 "path": "res://scripts/TextureLoader.gd"
+}, {
+"base": "AOEBase",
+"class": "Tower",
+"language": "GDScript",
+"path": "res://scripts/Tower.gd"
 } ]
 _global_script_class_icons={
-"AOE": "",
+"AOEBase": "",
 "Boss": "",
+"Donut": "",
 "Friendly": "",
 "HealthBar": "",
 "Player": "",
 "PlayerStatus": "",
 "Status": "",
-"TextureLoader": ""
+"TextureLoader": "",
+"Tower": ""
 }
 
 [application]

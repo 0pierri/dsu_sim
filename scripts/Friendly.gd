@@ -1,7 +1,7 @@
 extends KinematicBody
 class_name Friendly
 
-const MAX_HEALTH = 10
+var max_health = 10
 var flash_timer
 var health
 var facing = 0
@@ -23,7 +23,7 @@ signal loaded(f)
 
 func _ready():
 	get_node("CollisionArea").name = name
-	health = MAX_HEALTH
+	health = max_health
 	
 	ScriptManager.connect("reset", self, "_on_reset")
 	ScriptManager.connect("damage", self, "_on_damage")
@@ -33,7 +33,7 @@ func _ready():
 	ScriptManager.connect("remove_status", self, "_on_remove_status")
 		
 	var hb = HealthBarScene.instance()
-	hb.setup(MAX_HEALTH, self)
+	hb.setup(max_health, self)
 	PartyHealth.add_child(hb)
 	emit_signal("loaded", self)
 	
@@ -52,7 +52,7 @@ func set_facing(rad: float):
 	Target.rotation.y = rad
 	
 func take_damage(amount: float):
-	health = clamp(health - amount, 0, MAX_HEALTH)
+	health = clamp(health - amount, 0, max_health)
 	emit_signal("health_changed", health)
 	Model.modulate = Color(1, 0.42, 0.42, 1)
 	if health <= 0:
@@ -68,7 +68,7 @@ func knockback(distance: float, duration: float, direction: Vector3):
 	
 func _on_damage(players: Array, _name, amount: float):
 	if players.has(name):
-		health = clamp(health - amount, 0, MAX_HEALTH)
+		health = clamp(health - amount, 0, max_health)
 		emit_signal("health_changed", health)
 		Model.modulate = Color(1, 0.42, 0.42, 1)
 		if health <= 0:
@@ -96,6 +96,6 @@ func _on_remove_status(_status: Texture, player: String):
 		pass
 
 func _on_reset():
-	health = MAX_HEALTH
+	health = max_health
 	kb_duration = 0
 	Model.modulate = Color(1, 1, 1, 1)

@@ -8,7 +8,7 @@ var standard_controls = true
 
 func _ready():
 	var playerHealthbar = get_node("/root/Game/UI/Margin/Container/Center/PlayerHealth")
-	playerHealthbar.setup(MAX_HEALTH, self)
+	playerHealthbar.setup(max_health, self)
 	rotation.x = 0
 	rotation.z = 0
 	rotate_y(deg2rad(180))

@@ -103,7 +103,7 @@ func reset():
 		
 	players.remove(players.find("0"))
 	players.push_front("0")
-	dives[0] = "elusive"
+	dives[0] = "highjump"
 	
 	emit_signal("timer_changed", timer)
 	emit_signal("mech_started", "None")	
