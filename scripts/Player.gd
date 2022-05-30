@@ -1,6 +1,7 @@
 extends Friendly
+class_name Player
 
-const MOVE_SPEED = 7
+const MOVE_SPEED = 8
 
 var velocity = Vector3(0,0,0)
 var standard_controls = true

@@ -19,6 +19,7 @@ onready var PartyHealth = get_node("/root/Game/UI/Margin/Container/Left/PartyHea
 onready var ScriptManager = get_node("/root/Game/ScriptManager")
 
 signal health_changed(health)
+signal loaded(f)
 
 func _ready():
 	get_node("CollisionArea").name = name
@@ -34,6 +35,7 @@ func _ready():
 	var hb = HealthBarScene.instance()
 	hb.setup(MAX_HEALTH, self)
 	PartyHealth.add_child(hb)
+	emit_signal("loaded", self)
 	
 func _physics_process(delta):
 	if kb_duration > 0:
@@ -59,8 +61,10 @@ func take_damage(amount: float):
 	Model.modulate = Color(1, 1, 1, 1)
 	
 func knockback(distance: float, duration: float, direction: Vector3):
-	kb_duration = duration
-	kb_vector = direction.normalized() * distance/duration
+	# If new knockback, overwrite any existing ones
+	if duration != 0:
+		kb_duration = duration
+		kb_vector = direction.normalized() * distance/duration
 	
 func _on_damage(players: Array, _name, amount: float):
 	if players.has(name):
@@ -72,16 +76,18 @@ func _on_damage(players: Array, _name, amount: float):
 		yield(get_tree().create_timer(0.3), "timeout")
 		Model.modulate = Color(1, 1, 1, 1)
 		
-func _on_apply_effect(effect: String, player: String):
+func _on_apply_effect(effect: String, player: String, duration: float):
 	if player == name:
-		Effect.texture = TextureLoader.get_texture(effect)
+		Effect.texture = TextureLoader.get("tex_" + effect)
 		Effect.show()
+		yield(get_tree().create_timer(duration), "timeout")
+		Effect.hide()
 		
 func _on_remove_effect(player: String):
 	if player == name:
 		Effect.hide()
 		
-func _on_apply_status(_status: Texture, player: String):
+func _on_apply_status(_status: Texture, player: String, duration: float, show_timer: bool):
 	if player == name:
 		pass
 

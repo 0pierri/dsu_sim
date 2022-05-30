@@ -2,7 +2,7 @@
 
 [ext_resource path="res://textures/ui/partyhpfull.png" type="Texture" id=1]
 [ext_resource path="res://textures/ui/partyhp.png" type="Texture" id=2]
-[ext_resource path="res://scripts/HealthBarWithStatus.gd" type="Script" id=3]
+[ext_resource path="res://scripts/hud/HealthBarWithStatus.gd" type="Script" id=3]
 
 [node name="HealthBar" type="HBoxContainer"]
 margin_right = 90.0

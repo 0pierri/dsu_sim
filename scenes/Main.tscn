@@ -1,13 +1,13 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://font/regular.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=2]
 [ext_resource path="res://scripts/ScriptManager.gd" type="Script" id=3]
 [ext_resource path="res://scripts/PlayerCamera.gd" type="Script" id=4]
-[ext_resource path="res://scripts/Time.gd" type="Script" id=5]
-[ext_resource path="res://scripts/NamePlate.gd" type="Script" id=6]
-[ext_resource path="res://scripts/HealthBar.gd" type="Script" id=7]
-[ext_resource path="res://scripts/NPCManager.gd" type="Script" id=8]
+[ext_resource path="res://scripts/ui/Time.gd" type="Script" id=5]
+[ext_resource path="res://scripts/hud/NamePlate.gd" type="Script" id=6]
+[ext_resource path="res://scripts/hud/HealthBar.gd" type="Script" id=7]
+[ext_resource path="res://scenes/Status.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/Friendly.tscn" type="PackedScene" id=9]
 [ext_resource path="res://textures/ui/button.png" type="Texture" id=10]
 [ext_resource path="res://textures/ui/button_hover.png" type="Texture" id=11]
@@ -19,18 +19,19 @@
 [ext_resource path="res://textures/ui/enemycastfull.png" type="Texture" id=17]
 [ext_resource path="res://textures/ui/playerhp.png" type="Texture" id=18]
 [ext_resource path="res://textures/ui/enemycast.png" type="Texture" id=19]
-[ext_resource path="res://scripts/EnemyCastBar.gd" type="Script" id=20]
+[ext_resource path="res://scripts/hud/EnemyCastBar.gd" type="Script" id=20]
 [ext_resource path="res://scripts/Boss.gd" type="Script" id=21]
 [ext_resource path="res://scripts/TextureLoader.gd" type="Script" id=22]
-[ext_resource path="res://scripts/Mech.gd" type="Script" id=23]
+[ext_resource path="res://scripts/ui/Mech.gd" type="Script" id=23]
 [ext_resource path="res://font/MYRIADPRO-REGULAR.OTF" type="DynamicFontData" id=24]
 [ext_resource path="res://font/MYRIADPRO-BOLD.OTF" type="DynamicFontData" id=25]
-[ext_resource path="res://scripts/StartButton.gd" type="Script" id=26]
-[ext_resource path="res://scripts/ControlButtonLabel.gd" type="Script" id=27]
-[ext_resource path="res://scripts/PlayerStatus.gd" type="Script" id=28]
-[ext_resource path="res://scripts/PlayerStatusContainer.gd" type="Script" id=29]
+[ext_resource path="res://scripts/ui/StartButton.gd" type="Script" id=26]
+[ext_resource path="res://scripts/ui/ControlButtonLabel.gd" type="Script" id=27]
+[ext_resource path="res://scripts/hud/PlayerStatusContainer.gd" type="Script" id=28]
+[ext_resource path="res://scripts/hud/PlayerStatusMarginContainer.gd" type="Script" id=29]
 [ext_resource path="res://scripts/AOEManager.gd" type="Script" id=30]
-[ext_resource path="res://scripts/Pos.gd" type="Script" id=31]
+[ext_resource path="res://scripts/ui/Pos.gd" type="Script" id=31]
+[ext_resource path="res://scenes/Friendlies.gd" type="Script" id=33]
 
 [sub_resource type="DynamicFont" id=10]
 use_filter = true
@@ -360,6 +361,11 @@ margin_right = 302.0
 margin_bottom = 600.0
 mouse_filter = 2
 
+[node name="Viewport" type="Viewport" parent="UI"]
+size = Vector2( 20, 20 )
+
+[node name="StatusIcon" parent="UI/Viewport" instance=ExtResource( 8 )]
+
 [node name="Status" type="MarginContainer" parent="."]
 margin_right = 30.0
 margin_bottom = 25.0
@@ -419,7 +425,7 @@ alpha_cut = 2
 texture = ExtResource( 14 )
 
 [node name="Friendlies" type="Spatial" parent="."]
-script = ExtResource( 8 )
+script = ExtResource( 33 )
 
 [node name="0" parent="Friendlies" instance=ExtResource( 9 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.51, -9.198 )
@@ -439,6 +445,27 @@ transform = Transform( 1, 2.01695e-08, 2.35848e-09, -2.01695e-08, 0.973022, 0.23
 
 [node name="Camera" type="Camera" parent="Friendlies/0/CameraBase/CameraTilt"]
 
+[node name="1" parent="Friendlies" instance=ExtResource( 9 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.0256824, 0.51, -8.55102 )
+
+[node name="2" parent="Friendlies" instance=ExtResource( 9 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -7.16437, 0.51, 0.154073 )
+
+[node name="3" parent="Friendlies" instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.90759, 0.51, 2.25972 )
+
+[node name="4" parent="Friendlies" instance=ExtResource( 9 )]
+transform = Transform( 0.679531, 0, 0.733647, 0, 1, 0, -0.733647, 0, 0.679531, 5.67501, 0.51, 4.49377 )
+
+[node name="5" parent="Friendlies" instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0256891, 0.51, 2.92736 )
+
+[node name="6" parent="Friendlies" instance=ExtResource( 9 )]
+transform = Transform( 0.809089, 0, -0.587686, 0, 1, 0, 0.587686, 0, 0.809089, -3.59621, 0.51, 5.67972 )
+
+[node name="7" parent="Friendlies" instance=ExtResource( 9 )]
+transform = Transform( 0.777245, 0, -0.629198, 0, 1, 0, 0.629198, 0, 0.777245, -5.52094, 0.51, 5.2419 )
+
 [node name="ScriptManager" type="Node" parent="."]
 script = ExtResource( 3 )
 
@@ -454,10 +481,22 @@ script = ExtResource( 22 )
 [connection signal="pressed" from="UI/Margin/Container/Left/Menu/ControlButtonContainer/ControlButton" to="Friendlies/0" method="_on_ControlButton_pressed"]
 [connection signal="pressed" from="UI/Margin/Container/Left/Menu/ControlButtonContainer/ControlButton" to="Friendlies/0/CameraBase" method="_on_ControlButton_pressed"]
 [connection signal="loaded" from="Friendlies" to="AOEManager" method="_on_Friendlies_loaded"]
+[connection signal="loaded" from="Friendlies" to="Boss" method="_on_Friendlies_loaded"]
+[connection signal="loaded" from="Friendlies/0" to="Friendlies" method="_on_loaded"]
+[connection signal="loaded" from="Friendlies/1" to="Friendlies" method="_on_loaded"]
+[connection signal="loaded" from="Friendlies/2" to="Friendlies" method="_on_loaded"]
+[connection signal="loaded" from="Friendlies/3" to="Friendlies" method="_on_loaded"]
+[connection signal="loaded" from="Friendlies/4" to="Friendlies" method="_on_loaded"]
+[connection signal="loaded" from="Friendlies/5" to="Friendlies" method="_on_loaded"]
+[connection signal="loaded" from="Friendlies/6" to="Friendlies" method="_on_loaded"]
+[connection signal="loaded" from="Friendlies/7" to="Friendlies" method="_on_loaded"]
 [connection signal="apply_status" from="ScriptManager" to="Status/HBoxContainer" method="_on_apply_status"]
 [connection signal="boss_cast" from="ScriptManager" to="UI/Margin/Container/Center/BossDetails/BossCastBar" method="_on_ScriptManager_boss_cast"]
 [connection signal="mech_dark_dive" from="ScriptManager" to="AOEManager" method="_on_mech_dark_dive"]
+[connection signal="mech_eye" from="ScriptManager" to="AOEManager" method="_on_mech_eye"]
+[connection signal="mech_gnashlash" from="ScriptManager" to="AOEManager" method="_on_mech_gnashlash"]
 [connection signal="mech_started" from="ScriptManager" to="UI/Margin/Container/Left/Menu/DetailsContainer/VBoxContainer/Mech" method="_on_ScriptManager_mech_started"]
+[connection signal="mech_towers" from="ScriptManager" to="AOEManager" method="_on_mech_towers"]
 [connection signal="remove_status" from="ScriptManager" to="Status/HBoxContainer" method="_on_remove_status"]
 [connection signal="remove_status_all" from="ScriptManager" to="Status/HBoxContainer" method="_on_remove_status_all"]
 [connection signal="timer_changed" from="ScriptManager" to="UI/Margin/Container/Left/Menu/DetailsContainer/VBoxContainer/Time" method="_on_ScriptManager_timer_changed"]

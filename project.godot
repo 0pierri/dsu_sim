@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Area",
+"class": "AOE",
+"language": "GDScript",
+"path": "res://scripts/AOE.gd"
+}, {
+"base": "Position3D",
+"class": "Boss",
+"language": "GDScript",
+"path": "res://scripts/Boss.gd"
+}, {
 "base": "KinematicBody",
 "class": "Friendly",
 "language": "GDScript",
@@ -17,11 +27,37 @@ _global_script_classes=[ {
 "base": "Container",
 "class": "HealthBar",
 "language": "GDScript",
-"path": "res://scripts/HealthBar.gd"
+"path": "res://scripts/hud/HealthBar.gd"
+}, {
+"base": "Friendly",
+"class": "Player",
+"language": "GDScript",
+"path": "res://scripts/Player.gd"
+}, {
+"base": "Status",
+"class": "PlayerStatus",
+"language": "GDScript",
+"path": "res://scripts/hud/PlayerStatus.gd"
+}, {
+"base": "MarginContainer",
+"class": "Status",
+"language": "GDScript",
+"path": "res://scripts/hud/Status.gd"
+}, {
+"base": "Node",
+"class": "TextureLoader",
+"language": "GDScript",
+"path": "res://scripts/TextureLoader.gd"
 } ]
 _global_script_class_icons={
+"AOE": "",
+"Boss": "",
 "Friendly": "",
-"HealthBar": ""
+"HealthBar": "",
+"Player": "",
+"PlayerStatus": "",
+"Status": "",
+"TextureLoader": ""
 }
 
 [application]
@@ -29,6 +65,10 @@ _global_script_class_icons={
 config/name="DSU"
 run/main_scene="res://scenes/Main.tscn"
 config/icon="res://icon.png"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/CSGExport/plugin.cfg" )
 
 [input]
 

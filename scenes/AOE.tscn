@@ -13,9 +13,11 @@ script = ExtResource( 2 )
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
+[node name="Texture" type="Sprite3D" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.02, 0 )
 opacity = 0.5
 pixel_size = 0.005
 alpha_cut = 2
 texture = ExtResource( 1 )
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
