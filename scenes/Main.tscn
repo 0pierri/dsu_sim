@@ -499,5 +499,6 @@ script = ExtResource( 22 )
 [connection signal="mech_towers" from="ScriptManager" to="AOEManager" method="_on_mech_towers"]
 [connection signal="remove_status" from="ScriptManager" to="Status/HBoxContainer" method="_on_remove_status"]
 [connection signal="remove_status_all" from="ScriptManager" to="Status/HBoxContainer" method="_on_remove_status_all"]
+[connection signal="reset" from="ScriptManager" to="AOEManager" method="_on_reset"]
 [connection signal="timer_changed" from="ScriptManager" to="UI/Margin/Container/Left/Menu/DetailsContainer/VBoxContainer/Time" method="_on_ScriptManager_timer_changed"]
 [connection signal="toggle_pause" from="ScriptManager" to="UI/Margin/Container/Center/BossDetails/BossCastBar" method="_on_ScriptManager_toggle_pause"]

@@ -1,7 +1,8 @@
 extends Area
 class_name AOEBase
 
-var target
+var source: String
+var target_name: String
 var min_soak = 1
 var damage = 1
 var kb_distance
@@ -14,14 +15,17 @@ func check():
 	for f in friendlies:
 		var dist = f.global_transform.origin.distance_to(global_transform.origin)
 		if dist < scale.x:
-			#print("(" + target + ") Adding target " + f.name + "(" + str(dist) + ")")
+			#print("(" + target_name + ") Adding target " + f.name + "(" + str(dist) + ")")
 			_targets.append(f)
 
 func hit():
 	for t in _targets:
-		if t.name != target:
-			#print("(" + target + ") Hitting " + t.name)
-			t.take_damage(damage if _targets.size() >= min_soak else t.max_health)
+		if t.name != target_name:
+			#print("(" + target_name + ") Hitting " + t.name)
+			if _targets.size() >= min_soak:
+				t.take_damage(damage, source)
+			else:
+				t.take_damage(t.max_health, "%s (missing %s)" % [source, min_soak - _targets.size()])
 			t.knockback(kb_distance, kb_duration, t.global_transform.origin - global_transform.origin)
 
 func release():

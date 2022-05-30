@@ -1,4 +1,5 @@
 extends Node
+class_name ScriptManager
 
 const SCRIPT = [ # time is delay until the mechanic begins
 	{"name": "Dive From Grace (markers)", "time": 1.0},
@@ -30,7 +31,6 @@ signal reset()
 signal timer_changed(timer)
 signal mech_started(mech)
 signal boss_cast(ability, length)
-signal damage(players, ability, amount)
 
 signal apply_effect(effect, player, duration)
 signal remove_effect(player)
@@ -56,14 +56,14 @@ func _ready():
 	#get_viewport().debug_draw = 2
 	randomize()
 	reset()
-
-func _physics_process(delta):
+	
+func _process(delta):
 	if !started:
 		return
-		
 	timer += delta
 	emit_signal("timer_changed", timer)
-	
+
+func _physics_process(delta):
 	if timer >= next_mech_time:
 		emit_signal("mech_started", SCRIPT[curr_mech]["name"])
 		funcref(self, "mech_" + str(curr_mech)).call_func()

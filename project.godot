@@ -44,6 +44,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/hud/PlayerStatus.gd"
 }, {
+"base": "Node",
+"class": "ScriptManager",
+"language": "GDScript",
+"path": "res://scripts/ScriptManager.gd"
+}, {
 "base": "MarginContainer",
 "class": "Status",
 "language": "GDScript",
@@ -67,6 +72,7 @@ _global_script_class_icons={
 "HealthBar": "",
 "Player": "",
 "PlayerStatus": "",
+"ScriptManager": "",
 "Status": "",
 "TextureLoader": "",
 "Tower": ""
