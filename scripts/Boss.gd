@@ -18,7 +18,7 @@ func _ready():
 	pass
 
 func _on_Friendlies_loaded(f):
-	friendlies = f
+	friendlies = f.duplicate()
 
 func friendlies_in_los():
 	var p = []

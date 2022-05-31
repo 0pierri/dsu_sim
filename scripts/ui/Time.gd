@@ -1,4 +1,6 @@
 extends Label
 
-func _on_ScriptManager_timer_changed(timer):
-	text = "Time: " + str(stepify(timer, 0.01)).pad_decimals(2)
+onready var T = get_node("/root/Game/Timer")
+
+func _process(_delta):
+	text = "Time: " + str(stepify(T.timer, 0.01)).pad_decimals(2)

@@ -1,4 +1,5 @@
 extends Node
+class_name AOEManager
 
 enum Type {
 	AOE,
@@ -47,10 +48,12 @@ func create_aoe(source: String, type, min_soak, scale, translation, target_name:
 func _on_Friendlies_loaded(f):
 	friendlies = f
 
-func _on_mech_divefromgrace():
-	pass
+func _on_reset():
+	for t in towers:
+		t.reset()
+	towers.clear()
 
-func _on_mech_dark_dive(type, p):
+func mech_dark_dive(type, p):
 	var f: Friendly = friendlies[int(p)]
 	match type:
 		"spineshatter":
@@ -66,23 +69,22 @@ func _on_mech_dark_dive(type, p):
 			create_aoe("Dark Elusive Dive", Type.AOE, 0, DIVE_SCALE, dest, p, 10, 40, 0.5)
 			towers.append(dest)
 			
-func _on_mech_eye():
+func mech_eye():
 	# Goes on a random player in front of the boss - assuming a 90' cone
 	var f: Array = boss.friendlies_in_los()
+	if f.size() == 0:
+		f = friendlies
 	var i = randi() % f.size()
 	create_aoe("Eye of the Tyrant", Type.AOE, 5, DIVE_SCALE, f[i].transform.origin, "", 1, 0, 0)
 
-func _on_mech_gnashlash(is_lash: bool):
+func mech_gnashlash(is_lash: bool):
 	if is_lash:
 		create_aoe("Lash", Type.DONUT, 0, BOSS_SCALE, boss.transform.origin, "", 5, 10, 0.5)
 	else:
 		create_aoe("Gnash", Type.AOE, 0, BOSS_SCALE, boss.transform.origin, "", 5, 10, 0.5)
 
-func _on_mech_towers():
+func mech_towers():
 	for t in towers:
 		#TODO: Damage type (i.e. fire + vuln handling) + tower aoe type & model
 		create_aoe("Tower", Type.TOWER, 1, DIVE_SCALE, t, "", 1, 0, 0)
-	towers.clear()
-
-func _on_reset():
 	towers.clear()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://font/regular.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=2]
@@ -31,6 +31,7 @@
 [ext_resource path="res://scripts/hud/PlayerStatusMarginContainer.gd" type="Script" id=29]
 [ext_resource path="res://scripts/AOEManager.gd" type="Script" id=30]
 [ext_resource path="res://scripts/ui/Pos.gd" type="Script" id=31]
+[ext_resource path="res://scripts/Timer.gd" type="Script" id=32]
 [ext_resource path="res://scenes/Friendlies.gd" type="Script" id=33]
 
 [sub_resource type="DynamicFont" id=10]
@@ -472,11 +473,16 @@ script = ExtResource( 3 )
 [node name="TextureLoader" type="Node" parent="."]
 script = ExtResource( 22 )
 
-[connection signal="button_pressed" from="UI/Margin/Container/Left/Menu/StartButtonContainer/StartButton" to="ScriptManager" method="_on_StartButton_button_pressed"]
+[node name="Timer" type="Node" parent="."]
+script = ExtResource( 32 )
+
 [connection signal="pressed" from="UI/Margin/Container/Left/Menu/StartButtonContainer/StartButton" to="UI/Margin/Container/Left/Menu/StartButtonContainer/StartButton" method="_on_StartButton_pressed"]
+[connection signal="pressed" from="UI/Margin/Container/Left/Menu/StartButtonContainer/StartButton" to="UI/Margin/Container/Center/BossDetails/BossCastBar" method="_on_StartButton_pressed"]
+[connection signal="pressed" from="UI/Margin/Container/Left/Menu/StartButtonContainer/StartButton" to="Timer" method="_on_StartButton_pressed"]
 [connection signal="pressed" from="UI/Margin/Container/Left/Menu/ResetButtonContainer/ResetButton" to="UI/Margin/Container/Left/Menu/StartButtonContainer/StartButton" method="_on_ResetButton_pressed"]
 [connection signal="pressed" from="UI/Margin/Container/Left/Menu/ResetButtonContainer/ResetButton" to="UI/Margin/Container/Center/BossDetails/BossCastBar" method="_on_ResetButton_pressed"]
 [connection signal="pressed" from="UI/Margin/Container/Left/Menu/ResetButtonContainer/ResetButton" to="ScriptManager" method="_on_ResetButton_pressed"]
+[connection signal="pressed" from="UI/Margin/Container/Left/Menu/ResetButtonContainer/ResetButton" to="Timer" method="_on_ResetButton_pressed"]
 [connection signal="pressed" from="UI/Margin/Container/Left/Menu/ControlButtonContainer/ControlButton" to="UI/Margin/Container/Left/Menu/ControlButtonContainer/ControlButton/Label" method="_on_ControlButton_pressed"]
 [connection signal="pressed" from="UI/Margin/Container/Left/Menu/ControlButtonContainer/ControlButton" to="Friendlies/0" method="_on_ControlButton_pressed"]
 [connection signal="pressed" from="UI/Margin/Container/Left/Menu/ControlButtonContainer/ControlButton" to="Friendlies/0/CameraBase" method="_on_ControlButton_pressed"]
@@ -490,15 +496,15 @@ script = ExtResource( 22 )
 [connection signal="loaded" from="Friendlies/5" to="Friendlies" method="_on_loaded"]
 [connection signal="loaded" from="Friendlies/6" to="Friendlies" method="_on_loaded"]
 [connection signal="loaded" from="Friendlies/7" to="Friendlies" method="_on_loaded"]
+[connection signal="apply_effect" from="ScriptManager" to="Friendlies" method="_on_apply_effect"]
 [connection signal="apply_status" from="ScriptManager" to="Status/HBoxContainer" method="_on_apply_status"]
+[connection signal="apply_status" from="ScriptManager" to="Friendlies" method="_on_apply_status"]
 [connection signal="boss_cast" from="ScriptManager" to="UI/Margin/Container/Center/BossDetails/BossCastBar" method="_on_ScriptManager_boss_cast"]
-[connection signal="mech_dark_dive" from="ScriptManager" to="AOEManager" method="_on_mech_dark_dive"]
-[connection signal="mech_eye" from="ScriptManager" to="AOEManager" method="_on_mech_eye"]
-[connection signal="mech_gnashlash" from="ScriptManager" to="AOEManager" method="_on_mech_gnashlash"]
 [connection signal="mech_started" from="ScriptManager" to="UI/Margin/Container/Left/Menu/DetailsContainer/VBoxContainer/Mech" method="_on_ScriptManager_mech_started"]
-[connection signal="mech_towers" from="ScriptManager" to="AOEManager" method="_on_mech_towers"]
+[connection signal="remove_effect" from="ScriptManager" to="Friendlies" method="_on_remove_effect"]
 [connection signal="remove_status" from="ScriptManager" to="Status/HBoxContainer" method="_on_remove_status"]
+[connection signal="remove_status" from="ScriptManager" to="Friendlies" method="_on_remove_status"]
 [connection signal="remove_status_all" from="ScriptManager" to="Status/HBoxContainer" method="_on_remove_status_all"]
+[connection signal="remove_status_all" from="ScriptManager" to="Friendlies" method="_on_remove_status_all"]
 [connection signal="reset" from="ScriptManager" to="AOEManager" method="_on_reset"]
-[connection signal="timer_changed" from="ScriptManager" to="UI/Margin/Container/Left/Menu/DetailsContainer/VBoxContainer/Time" method="_on_ScriptManager_timer_changed"]
-[connection signal="toggle_pause" from="ScriptManager" to="UI/Margin/Container/Center/BossDetails/BossCastBar" method="_on_ScriptManager_toggle_pause"]
+[connection signal="reset" from="ScriptManager" to="Friendlies" method="_on_reset"]

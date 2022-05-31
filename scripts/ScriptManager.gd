@@ -28,7 +28,6 @@ const SCRIPT = [ # time is delay until the mechanic begins
 
 signal toggle_pause()
 signal reset()
-signal timer_changed(timer)
 signal mech_started(mech)
 signal boss_cast(ability, length)
 
@@ -43,43 +42,32 @@ signal mech_eye()
 signal mech_gnashlash(is_lash)
 signal mech_towers()
 
-var timer = 0
-var started
 var curr_mech
 var next_mech_time
 var lash
 
 var players = ["0", "1", "2", "3", "4", "5", "6", "7"]
 var dives = []
+onready var AM = get_node("/root/Game/AOEManager") as AOEManager
+onready var T = get_node("/root/Game/Timer")
 
 func _ready():
 	#get_viewport().debug_draw = 2
 	randomize()
 	reset()
-	
-func _process(delta):
-	if !started:
-		return
-	timer += delta
-	emit_signal("timer_changed", timer)
 
-func _physics_process(delta):
-	if timer >= next_mech_time:
+func _physics_process(_delta):
+	if T.timer >= next_mech_time:
 		emit_signal("mech_started", SCRIPT[curr_mech]["name"])
-		funcref(self, "mech_" + str(curr_mech)).call_func()
+		if curr_mech < 7:
+			funcref(self, "mech_" + str(curr_mech)).call_func()
 		curr_mech += 1
 		next_mech_time += SCRIPT[curr_mech]["time"]
-		
-func _on_StartButton_button_pressed(state):
-	started = state == "Start"
-	emit_signal("toggle_pause")
-	
+
 func _on_ResetButton_pressed():
 	reset()
 	
 func reset():
-	started = false
-	timer = 0
 	curr_mech = 0
 	next_mech_time = SCRIPT[0]["time"]
 	
@@ -105,8 +93,7 @@ func reset():
 	players.push_front("0")
 	dives[0] = "highjump"
 	
-	emit_signal("timer_changed", timer)
-	emit_signal("mech_started", "None")	
+	emit_signal("mech_started", "None")
 	emit_signal("reset")
 	
 func mech_0():
@@ -132,15 +119,15 @@ func mech_3():
 	for i in range(3):
 		emit_signal("apply_status", "fireresdown", players[i], 12, true)
 		emit_signal("apply_status", "physvulnup", players[i], 2, true)
-		emit_signal("mech_dark_dive", dives[i], players[i])
-	emit_signal("mech_eye")
+		AM.mech_dark_dive(dives[i], players[i])
+	AM.mech_eye()
 	
 func mech_4():
-	emit_signal("mech_gnashlash", lash)
-	emit_signal("mech_towers")
+	AM.mech_towers()
+	AM.mech_gnashlash(lash)
 	
 func mech_5():
-	emit_signal("mech_gnashlash", not lash)
+	AM.mech_gnashlash(not lash)
 	
 func mech_23():
 	pass

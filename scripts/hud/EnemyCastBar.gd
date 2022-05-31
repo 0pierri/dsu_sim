@@ -23,6 +23,10 @@ func _on_ScriptManager_boss_cast(ability, length):
 	text.show()
 
 
+func _on_StartButton_pressed():
+	if casting:
+		paused = not paused
+
 func _on_ResetButton_pressed():
 	reset()
 
@@ -31,8 +35,3 @@ func reset():
 	paused = false
 	hide()
 	value = 0
-
-
-func _on_ScriptManager_toggle_pause():
-	if casting:
-		paused = not paused
