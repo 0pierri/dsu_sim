@@ -20,7 +20,7 @@ var tilt = 0.0
 var V_SENS
 var H_SENS
 
-onready var player = get_node(@"/root/Game/Friendlies/0")
+onready var player = get_node(@"/root/Game/Friendlies/0") as Player
 onready var camera_tilt = get_node(@"CameraTilt")
 
 # Called when the node enters the scene tree for the first time.
@@ -47,14 +47,14 @@ func _unhandled_input(event):
 		if event.button_index == BUTTON_RIGHT or event.button_index == BUTTON_LEFT:
 			if event.pressed:
 				if not drag_r and not drag_l:
-					mouse_pos = event.position					
+					mouse_pos = event.position
 				drag_r = drag_r or event.button_index == BUTTON_RIGHT
 				drag_l = drag_l or event.button_index == BUTTON_LEFT
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 			else:
 				drag_r = drag_r && event.button_index != BUTTON_RIGHT
 				drag_l = drag_l && event.button_index != BUTTON_LEFT
-				if not drag_r and not drag_l:					
+				if not drag_r and not drag_l:
 					Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 					get_viewport().warp_mouse(mouse_pos)
 					
@@ -64,22 +64,25 @@ func _unhandled_input(event):
 			config.set_value("Camera", "distance", camera_tilt.translation.z)
 			config.save("user://config.cfg")
 			
-	elif event is InputEventMouseMotion:
+	if event is InputEventMouseMotion:
 		if drag_r or drag_l:
 			camera_x_rot += event.relative.y / get_viewport().size.y * -deg2rad(180) * 0.1*V_SENS
 			camera_x_rot = clamp(camera_x_rot, deg2rad(CAMERA_X_ROT_MIN), deg2rad(CAMERA_X_ROT_MAX))
 			rotation.x = (camera_x_rot)
 			if drag_r or not standard_controls:
-				# Reset player rotation to face camera direction
-				if rotation.y != 0:
-					player.rotate_y(rotation.y)
-					rotation.y = 0
-					orthonormalize()
-				# Then rotate
-				player.rotate_y(-event.relative.x * 0.001*H_SENS)
+				if player.health > 0 or player.ignore_death:
+					# Reset player rotation to face camera direction
+					if rotation.y != 0:
+						player.rotate_y(rotation.y)
+						rotation.y = 0
+						orthonormalize()
+					# Then rotate
+					player.rotate_y(-event.relative.x * 0.001*H_SENS)
+				else:
+					rotate_y(-event.relative.x * 0.001*H_SENS)
 			elif drag_l:
 				rotate_y(-event.relative.x * 0.001*H_SENS)
-				orthonormalize()
+			orthonormalize()
 		
 	if event.is_action_pressed("ui_up"):
 		tilt = deg2rad(1) * 0.1

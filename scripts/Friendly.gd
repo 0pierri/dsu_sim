@@ -10,6 +10,7 @@ var kb_duration: float = 0
 var kb_vector: Vector3
 var just_died = false
 var death_recap = []
+var ignore_death = true
 
 var HealthBarScene = preload("res://scenes/PartyHealthBar.tscn")
 onready var TextureLoader = get_node("/root/Game/TextureLoader")
@@ -49,28 +50,32 @@ func take_damage(amount: float, source: String):
 	if health == 0:
 		if just_died:
 			death_recap.append([stepify(T.timer, 0.001), source])
-			pass
 		return
 	health = clamp(health - amount, 0, max_health)
 	emit_signal("health_changed", health)
 	Model.modulate = Color(1, 0.42, 0.42, 1)
-	if health == 0:
+	# Delay for flashing red on damage
+	if health > 0:
+		yield(get_tree().create_timer(0.3), "timeout")
+		if health > 0:
+			# Only remove red if not dead after the delay
+			Model.modulate = Color(1, 1, 1, 1)
+		# Only do the death recap for the killing blow, return otherwise
+		return
+	else:
 		just_died = true
 		death_recap.append([stepify(T.timer, 0.001), source])
 		yield(get_tree().create_timer(0.2), "timeout")
 		just_died = false
-		var recap = name + " death recap:\n"
+		var recap = name + "'s death recap:\n"
 		for s in death_recap:
 			recap += "[%s] %s\n" % [s[0], s[1]]
 		print(recap)
-		return
-	yield(get_tree().create_timer(0.3), "timeout")
-	Model.modulate = Color(1, 1, 1, 1)
 	
 func knockback(distance: float, duration: float, direction: Vector3):
-	direction.y = 0
 	# If new knockback, overwrite any existing ones
-	if duration != 0:
+	if duration != 0 and (ignore_death or health > 0):
+		direction.y = 0
 		kb_duration = duration
 		kb_vector = direction.normalized() * distance/duration
 		

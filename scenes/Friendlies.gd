@@ -23,6 +23,10 @@ func _on_remove_status(status, player):
 
 func _on_remove_status_all(player):
 	friendlies[int(player)].remove_status("")
+	
+func _on_IgnoreDeathButton_pressed():
+	for f in friendlies:
+		f.ignore_death = not f.ignore_death
 
 func _on_reset():
 	for f in friendlies:

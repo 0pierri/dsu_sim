@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://font/regular.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=2]
@@ -33,6 +33,7 @@
 [ext_resource path="res://scripts/ui/Pos.gd" type="Script" id=31]
 [ext_resource path="res://scripts/Timer.gd" type="Script" id=32]
 [ext_resource path="res://scenes/Friendlies.gd" type="Script" id=33]
+[ext_resource path="res://scripts/ui/IgnoreDeathLabel.gd" type="Script" id=34]
 
 [sub_resource type="DynamicFont" id=10]
 use_filter = true
@@ -41,6 +42,11 @@ font_data = ExtResource( 24 )
 [sub_resource type="DynamicFont" id=11]
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 24 )
+
+[sub_resource type="DynamicFont" id=12]
+size = 15
 use_filter = true
 font_data = ExtResource( 24 )
 
@@ -273,6 +279,40 @@ align = 1
 valign = 1
 script = ExtResource( 27 )
 
+[node name="IgnoreDeathButtonContainer" type="MarginContainer" parent="UI/Margin/Container/Left/Menu"]
+margin_top = 163.0
+margin_right = 107.0
+margin_bottom = 188.0
+rect_min_size = Vector2( 107, 25 )
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = -10
+
+[node name="IgnoreDeathButton" type="TextureButton" parent="UI/Margin/Container/Left/Menu/IgnoreDeathButtonContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 107.0
+margin_bottom = 35.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 10 )
+texture_pressed = ExtResource( 12 )
+texture_hover = ExtResource( 11 )
+expand = true
+
+[node name="Label" type="Label" parent="UI/Margin/Container/Left/Menu/IgnoreDeathButtonContainer/IgnoreDeathButton"]
+margin_top = 2.0
+margin_right = 97.0
+margin_bottom = 25.0
+size_flags_horizontal = 4
+custom_fonts/font = SubResource( 12 )
+text = "Ignore Death"
+align = 1
+valign = 1
+script = ExtResource( 34 )
+
 [node name="PartyHealth" type="VBoxContainer" parent="UI/Margin/Container/Left"]
 margin_left = 157.0
 margin_top = 300.0
@@ -486,6 +526,8 @@ script = ExtResource( 32 )
 [connection signal="pressed" from="UI/Margin/Container/Left/Menu/ControlButtonContainer/ControlButton" to="UI/Margin/Container/Left/Menu/ControlButtonContainer/ControlButton/Label" method="_on_ControlButton_pressed"]
 [connection signal="pressed" from="UI/Margin/Container/Left/Menu/ControlButtonContainer/ControlButton" to="Friendlies/0" method="_on_ControlButton_pressed"]
 [connection signal="pressed" from="UI/Margin/Container/Left/Menu/ControlButtonContainer/ControlButton" to="Friendlies/0/CameraBase" method="_on_ControlButton_pressed"]
+[connection signal="pressed" from="UI/Margin/Container/Left/Menu/IgnoreDeathButtonContainer/IgnoreDeathButton" to="Friendlies" method="_on_IgnoreDeathButton_pressed"]
+[connection signal="pressed" from="UI/Margin/Container/Left/Menu/IgnoreDeathButtonContainer/IgnoreDeathButton" to="UI/Margin/Container/Left/Menu/IgnoreDeathButtonContainer/IgnoreDeathButton/Label" method="_on_IgnoreDeathButton_pressed"]
 [connection signal="loaded" from="Friendlies" to="AOEManager" method="_on_Friendlies_loaded"]
 [connection signal="loaded" from="Friendlies" to="Boss" method="_on_Friendlies_loaded"]
 [connection signal="loaded" from="Friendlies/0" to="Friendlies" method="_on_loaded"]

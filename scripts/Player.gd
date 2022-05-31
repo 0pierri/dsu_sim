@@ -14,11 +14,14 @@ func _ready():
 	rotate_y(deg2rad(180))
 
 func _physics_process(delta):
+	# Finish any knockbacks first
 	if kb_duration > 0:
 		._physics_process(delta)
 		return
+	if health == 0 and not ignore_death:
+		return
+		
 	velocity = Vector3(0,0,0)
-	
 	if Input.is_action_pressed("move_left"):
 		velocity.x -= 1
 	if Input.is_action_pressed("move_right"):

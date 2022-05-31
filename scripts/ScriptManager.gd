@@ -59,8 +59,7 @@ func _ready():
 func _physics_process(_delta):
 	if T.timer >= next_mech_time:
 		emit_signal("mech_started", SCRIPT[curr_mech]["name"])
-		if curr_mech < 7:
-			funcref(self, "mech_" + str(curr_mech)).call_func()
+		funcref(self, "mech_" + str(curr_mech)).call_func()
 		curr_mech += 1
 		next_mech_time += SCRIPT[curr_mech]["time"]
 
