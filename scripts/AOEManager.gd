@@ -12,6 +12,7 @@ const TOWER_DISTANCE = 15
 const BOSS_SCALE = 8.2
 
 var towers = []
+var geirskoguls = []
 var friendlies = []
 var AOEScene = preload("res://scenes/AOE.tscn")
 var DonutScene = preload("res://scenes/Donut.tscn")
@@ -28,7 +29,8 @@ func create_aoe(source: String, type, min_soak, scale, translation, target_name:
 		Type.DONUT:
 			aoe = DonutScene.instance()
 		Type.TOWER:
-			aoe = TowerScene.instance()
+			aoe = TowerScene.instance() as Tower
+			aoe.connect("tower_soaked", self, "_on_tower_soaked")
 		
 	aoe.friendlies = friendlies
 	aoe.min_soak = min_soak
@@ -52,6 +54,9 @@ func _on_reset():
 	for t in towers:
 		t.reset()
 	towers.clear()
+	
+func _on_tower_soaked(translation):
+	geirskoguls.append(translation)
 
 func mech_dark_dive(type, p):
 	var f: Friendly = friendlies[int(p)]
