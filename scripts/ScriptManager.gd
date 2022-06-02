@@ -31,12 +31,6 @@ signal reset()
 signal mech_started(mech)
 signal boss_cast(ability, length)
 
-signal apply_effect(effect, player, duration)
-signal remove_effect(player)
-signal apply_status(status, player, duration, show_timer)
-signal remove_status(status, player)
-signal remove_status_all(player)
-
 signal mech_dark_dive(type, player)
 signal mech_eye()
 signal mech_gnashlash(is_lash)
@@ -49,6 +43,7 @@ var lash
 var players = ["0", "1", "2", "3", "4", "5", "6", "7"]
 var dives = []
 onready var AM = get_node("/root/Game/AOEManager") as AOEManager
+onready var F = get_node("/root/Game/Friendlies") as Friendlies
 onready var T = get_node("/root/Game/Timer")
 
 func _ready():
@@ -85,9 +80,10 @@ func reset():
 	lash = randi() % 2 == 0
 	
 	for p in players:
-		emit_signal("remove_effect", p)
-		emit_signal("remove_status_all", p)
+		F.remove_effect(p)
+		F.remove_status_all(p)
 		
+	#TODO: Remove this
 	players.remove(players.find("0"))
 	players.push_front("0")
 	dives[0] = "highjump"
@@ -98,26 +94,24 @@ func reset():
 func mech_0():
 	emit_signal("boss_cast", "Dive From Grace", 5)
 	for i in range(0,3):
-		emit_signal("apply_effect", "limitcut1", players[i], 5)
-		emit_signal("apply_status", "first", players[i], 15.5, false)
+		F.apply_effect("limitcut1", players[i], 5)
+		F.apply_status("first", players[i], 15.5, false)
 	for i in range(3,5):
-		emit_signal("apply_effect", "limitcut2_r", players[i], 5)
-		emit_signal("apply_status", "second", players[i], 15.5, false)
+		F.apply_effect("limitcut2_r", players[i], 5)
+		F.apply_status("second", players[i], 15.5, false)
 	for i in range(5,8):
-		emit_signal("apply_effect", "limitcut3", players[i], 5)
-		emit_signal("apply_status", "third", players[i], 15.5, false)
+		F.apply_effect("limitcut3", players[i], 5)
+		F.apply_status("third", players[i], 15.5, false)
 	
 func mech_1():
 	for i in range(8):
-		emit_signal("apply_status", dives[i], players[i], 9, true)
+		F.apply_status(dives[i], players[i], 9, true)
 	
 func mech_2():	
 	emit_signal("boss_cast", "Lash and Gnash" if lash else "Gnash and Lash", 8)
 	
 func mech_3():
 	for i in range(3):
-		emit_signal("apply_status", "fireresdown", players[i], 12, true)
-		emit_signal("apply_status", "physvulnup", players[i], 2, true)
 		AM.mech_dark_dive(dives[i], players[i])
 	AM.mech_eye()
 	

@@ -36,8 +36,8 @@ func release():
 		
 	if _targets.size() < min_soak:
 		show()
-		for f in friendlies:
-			f.take_damage(f.max_health, source + " not soaked")
+		for f in F.friendlies:
+			f.take_damage(f.max_health, "magic", source + " not soaked")
 			
 	yield(get_tree().create_timer(0.3), "timeout")	
 	queue_free()

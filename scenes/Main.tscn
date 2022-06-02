@@ -133,13 +133,13 @@ margin_bottom = 600.0
 mouse_filter = 2
 size_flags_horizontal = 3
 
-[node name="Menu" type="VBoxContainer" parent="UI/Margin/Container/Left"]
+[node name="V" type="VBoxContainer" parent="UI/Margin/Container/Left"]
 margin_right = 153.0
 margin_bottom = 600.0
 mouse_filter = 2
 size_flags_horizontal = 3
 
-[node name="StartButtonContainer" type="MarginContainer" parent="UI/Margin/Container/Left/Menu"]
+[node name="M1" type="MarginContainer" parent="UI/Margin/Container/Left/V"]
 margin_right = 107.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 107, 25 )
@@ -150,7 +150,7 @@ custom_constants/margin_top = 10
 custom_constants/margin_left = 10
 custom_constants/margin_bottom = -10
 
-[node name="StartButton" type="TextureButton" parent="UI/Margin/Container/Left/Menu/StartButtonContainer"]
+[node name="StartButton" type="TextureButton" parent="UI/Margin/Container/Left/V/M1"]
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 107.0
@@ -162,7 +162,7 @@ texture_hover = ExtResource( 11 )
 expand = true
 script = ExtResource( 26 )
 
-[node name="Label" type="Label" parent="UI/Margin/Container/Left/Menu/StartButtonContainer/StartButton"]
+[node name="Label" type="Label" parent="UI/Margin/Container/Left/V/M1/StartButton"]
 margin_left = 23.0
 margin_top = 2.0
 margin_right = 71.0
@@ -173,7 +173,7 @@ text = "Start"
 align = 1
 valign = 1
 
-[node name="ResetButtonContainer" type="MarginContainer" parent="UI/Margin/Container/Left/Menu"]
+[node name="M2" type="MarginContainer" parent="UI/Margin/Container/Left/V"]
 margin_top = 29.0
 margin_right = 107.0
 margin_bottom = 54.0
@@ -185,7 +185,7 @@ custom_constants/margin_top = 10
 custom_constants/margin_left = 10
 custom_constants/margin_bottom = -10
 
-[node name="ResetButton" type="TextureButton" parent="UI/Margin/Container/Left/Menu/ResetButtonContainer"]
+[node name="ResetButton" type="TextureButton" parent="UI/Margin/Container/Left/V/M2"]
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 107.0
@@ -196,7 +196,7 @@ texture_pressed = ExtResource( 12 )
 texture_hover = ExtResource( 11 )
 expand = true
 
-[node name="Label" type="Label" parent="UI/Margin/Container/Left/Menu/ResetButtonContainer/ResetButton"]
+[node name="Label" type="Label" parent="UI/Margin/Container/Left/V/M2/ResetButton"]
 margin_left = 23.0
 margin_top = 2.0
 margin_right = 71.0
@@ -207,7 +207,7 @@ text = "Reset"
 align = 1
 valign = 1
 
-[node name="DetailsContainer" type="MarginContainer" parent="UI/Margin/Container/Left/Menu"]
+[node name="M3" type="MarginContainer" parent="UI/Margin/Container/Left/V"]
 margin_top = 58.0
 margin_right = 153.0
 margin_bottom = 130.0
@@ -215,21 +215,21 @@ mouse_filter = 2
 custom_constants/margin_top = 16
 custom_constants/margin_left = 12
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Margin/Container/Left/Menu/DetailsContainer"]
+[node name="V" type="VBoxContainer" parent="UI/Margin/Container/Left/V/M3"]
 margin_left = 12.0
 margin_top = 16.0
 margin_right = 153.0
 margin_bottom = 72.0
 mouse_filter = 2
 
-[node name="Time" type="Label" parent="UI/Margin/Container/Left/Menu/DetailsContainer/VBoxContainer"]
+[node name="Time" type="Label" parent="UI/Margin/Container/Left/V/M3/V"]
 margin_bottom = 16.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_fonts/font = SubResource( 11 )
 script = ExtResource( 5 )
 
-[node name="Mech" type="Label" parent="UI/Margin/Container/Left/Menu/DetailsContainer/VBoxContainer"]
+[node name="Mech" type="Label" parent="UI/Margin/Container/Left/V/M3/V"]
 margin_top = 20.0
 margin_bottom = 36.0
 size_flags_horizontal = 0
@@ -237,7 +237,7 @@ size_flags_vertical = 0
 custom_fonts/font = SubResource( 11 )
 script = ExtResource( 23 )
 
-[node name="Pos" type="Label" parent="UI/Margin/Container/Left/Menu/DetailsContainer/VBoxContainer"]
+[node name="Pos" type="Label" parent="UI/Margin/Container/Left/V/M3/V"]
 margin_top = 40.0
 margin_bottom = 56.0
 size_flags_horizontal = 0
@@ -245,7 +245,7 @@ size_flags_vertical = 0
 custom_fonts/font = SubResource( 11 )
 script = ExtResource( 31 )
 
-[node name="ControlButtonContainer" type="MarginContainer" parent="UI/Margin/Container/Left/Menu"]
+[node name="M4" type="MarginContainer" parent="UI/Margin/Container/Left/V"]
 margin_top = 134.0
 margin_right = 107.0
 margin_bottom = 159.0
@@ -257,7 +257,7 @@ custom_constants/margin_top = 10
 custom_constants/margin_left = 10
 custom_constants/margin_bottom = -10
 
-[node name="ControlButton" type="TextureButton" parent="UI/Margin/Container/Left/Menu/ControlButtonContainer"]
+[node name="ControlButton" type="TextureButton" parent="UI/Margin/Container/Left/V/M4"]
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 107.0
@@ -268,7 +268,7 @@ texture_pressed = ExtResource( 12 )
 texture_hover = ExtResource( 11 )
 expand = true
 
-[node name="Label" type="Label" parent="UI/Margin/Container/Left/Menu/ControlButtonContainer/ControlButton"]
+[node name="Label" type="Label" parent="UI/Margin/Container/Left/V/M4/ControlButton"]
 margin_top = 2.0
 margin_right = 97.0
 margin_bottom = 25.0
@@ -279,7 +279,7 @@ align = 1
 valign = 1
 script = ExtResource( 27 )
 
-[node name="IgnoreDeathButtonContainer" type="MarginContainer" parent="UI/Margin/Container/Left/Menu"]
+[node name="IgnoreDeathButtonContainer" type="MarginContainer" parent="UI/Margin/Container/Left/V"]
 margin_top = 163.0
 margin_right = 107.0
 margin_bottom = 188.0
@@ -291,7 +291,7 @@ custom_constants/margin_top = 10
 custom_constants/margin_left = 10
 custom_constants/margin_bottom = -10
 
-[node name="IgnoreDeathButton" type="TextureButton" parent="UI/Margin/Container/Left/Menu/IgnoreDeathButtonContainer"]
+[node name="IgnoreDeathButton" type="TextureButton" parent="UI/Margin/Container/Left/V/IgnoreDeathButtonContainer"]
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 107.0
@@ -302,7 +302,7 @@ texture_pressed = ExtResource( 12 )
 texture_hover = ExtResource( 11 )
 expand = true
 
-[node name="Label" type="Label" parent="UI/Margin/Container/Left/Menu/IgnoreDeathButtonContainer/IgnoreDeathButton"]
+[node name="Label" type="Label" parent="UI/Margin/Container/Left/V/IgnoreDeathButtonContainer/IgnoreDeathButton"]
 margin_top = 2.0
 margin_right = 97.0
 margin_bottom = 25.0
@@ -313,7 +313,7 @@ align = 1
 valign = 1
 script = ExtResource( 34 )
 
-[node name="PartyHealth" type="VBoxContainer" parent="UI/Margin/Container/Left"]
+[node name="Party" type="VBoxContainer" parent="UI/Margin/Container/Left"]
 margin_left = 157.0
 margin_top = 300.0
 margin_right = 311.0
@@ -329,7 +329,7 @@ margin_bottom = 600.0
 mouse_filter = 2
 size_flags_horizontal = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/Margin/Container/Center"]
+[node name="M" type="MarginContainer" parent="UI/Margin/Container/Center"]
 margin_right = 393.0
 margin_bottom = 422.0
 mouse_filter = 2
@@ -396,7 +396,7 @@ size_flags_horizontal = 3
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Margin/Container/Right"]
+[node name="V" type="VBoxContainer" parent="UI/Margin/Container/Right"]
 margin_top = 10.0
 margin_right = 302.0
 margin_bottom = 600.0
@@ -407,7 +407,7 @@ size = Vector2( 20, 20 )
 
 [node name="StatusIcon" parent="UI/Viewport" instance=ExtResource( 8 )]
 
-[node name="Status" type="MarginContainer" parent="."]
+[node name="PlayerStatus" type="MarginContainer" parent="."]
 margin_right = 30.0
 margin_bottom = 25.0
 mouse_filter = 2
@@ -415,7 +415,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource( 29 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Status"]
+[node name="Statuses" type="HBoxContainer" parent="PlayerStatus"]
 margin_bottom = 25.0
 size_flags_horizontal = 2
 script = ExtResource( 28 )
@@ -446,9 +446,6 @@ transform = Transform( -1, 3.82137e-15, 8.74228e-08, -3.82137e-15, 1, -8.74228e-
 mesh = SubResource( 2 )
 skeleton = NodePath("../Floor")
 material/0 = SubResource( 4 )
-
-[node name="AOEManager" type="Node" parent="."]
-script = ExtResource( 30 )
 
 [node name="Boss" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.511, 0 )
@@ -507,6 +504,9 @@ transform = Transform( 0.809089, 0, -0.587686, 0, 1, 0, 0.587686, 0, 0.809089, -
 [node name="7" parent="Friendlies" instance=ExtResource( 9 )]
 transform = Transform( 0.777245, 0, -0.629198, 0, 1, 0, 0.629198, 0, 0.777245, -5.52094, 0.51, 5.2419 )
 
+[node name="AOEManager" type="Node" parent="."]
+script = ExtResource( 30 )
+
 [node name="ScriptManager" type="Node" parent="."]
 script = ExtResource( 3 )
 
@@ -516,20 +516,20 @@ script = ExtResource( 22 )
 [node name="Timer" type="Node" parent="."]
 script = ExtResource( 32 )
 
-[connection signal="pressed" from="UI/Margin/Container/Left/Menu/StartButtonContainer/StartButton" to="UI/Margin/Container/Left/Menu/StartButtonContainer/StartButton" method="_on_StartButton_pressed"]
-[connection signal="pressed" from="UI/Margin/Container/Left/Menu/StartButtonContainer/StartButton" to="UI/Margin/Container/Center/BossDetails/BossCastBar" method="_on_StartButton_pressed"]
-[connection signal="pressed" from="UI/Margin/Container/Left/Menu/StartButtonContainer/StartButton" to="Timer" method="_on_StartButton_pressed"]
-[connection signal="pressed" from="UI/Margin/Container/Left/Menu/ResetButtonContainer/ResetButton" to="UI/Margin/Container/Left/Menu/StartButtonContainer/StartButton" method="_on_ResetButton_pressed"]
-[connection signal="pressed" from="UI/Margin/Container/Left/Menu/ResetButtonContainer/ResetButton" to="UI/Margin/Container/Center/BossDetails/BossCastBar" method="_on_ResetButton_pressed"]
-[connection signal="pressed" from="UI/Margin/Container/Left/Menu/ResetButtonContainer/ResetButton" to="ScriptManager" method="_on_ResetButton_pressed"]
-[connection signal="pressed" from="UI/Margin/Container/Left/Menu/ResetButtonContainer/ResetButton" to="Timer" method="_on_ResetButton_pressed"]
-[connection signal="pressed" from="UI/Margin/Container/Left/Menu/ControlButtonContainer/ControlButton" to="UI/Margin/Container/Left/Menu/ControlButtonContainer/ControlButton/Label" method="_on_ControlButton_pressed"]
-[connection signal="pressed" from="UI/Margin/Container/Left/Menu/ControlButtonContainer/ControlButton" to="Friendlies/0" method="_on_ControlButton_pressed"]
-[connection signal="pressed" from="UI/Margin/Container/Left/Menu/ControlButtonContainer/ControlButton" to="Friendlies/0/CameraBase" method="_on_ControlButton_pressed"]
-[connection signal="pressed" from="UI/Margin/Container/Left/Menu/IgnoreDeathButtonContainer/IgnoreDeathButton" to="Friendlies" method="_on_IgnoreDeathButton_pressed"]
-[connection signal="pressed" from="UI/Margin/Container/Left/Menu/IgnoreDeathButtonContainer/IgnoreDeathButton" to="UI/Margin/Container/Left/Menu/IgnoreDeathButtonContainer/IgnoreDeathButton/Label" method="_on_IgnoreDeathButton_pressed"]
-[connection signal="loaded" from="Friendlies" to="AOEManager" method="_on_Friendlies_loaded"]
+[connection signal="pressed" from="UI/Margin/Container/Left/V/M1/StartButton" to="UI/Margin/Container/Left/V/M1/StartButton" method="_on_StartButton_pressed"]
+[connection signal="pressed" from="UI/Margin/Container/Left/V/M1/StartButton" to="UI/Margin/Container/Center/BossDetails/BossCastBar" method="_on_StartButton_pressed"]
+[connection signal="pressed" from="UI/Margin/Container/Left/V/M1/StartButton" to="Timer" method="_on_StartButton_pressed"]
+[connection signal="pressed" from="UI/Margin/Container/Left/V/M2/ResetButton" to="UI/Margin/Container/Left/V/M1/StartButton" method="_on_ResetButton_pressed"]
+[connection signal="pressed" from="UI/Margin/Container/Left/V/M2/ResetButton" to="UI/Margin/Container/Center/BossDetails/BossCastBar" method="_on_ResetButton_pressed"]
+[connection signal="pressed" from="UI/Margin/Container/Left/V/M2/ResetButton" to="ScriptManager" method="_on_ResetButton_pressed"]
+[connection signal="pressed" from="UI/Margin/Container/Left/V/M2/ResetButton" to="Timer" method="_on_ResetButton_pressed"]
+[connection signal="pressed" from="UI/Margin/Container/Left/V/M4/ControlButton" to="UI/Margin/Container/Left/V/M4/ControlButton/Label" method="_on_ControlButton_pressed"]
+[connection signal="pressed" from="UI/Margin/Container/Left/V/M4/ControlButton" to="Friendlies/0" method="_on_ControlButton_pressed"]
+[connection signal="pressed" from="UI/Margin/Container/Left/V/M4/ControlButton" to="Friendlies/0/CameraBase" method="_on_ControlButton_pressed"]
+[connection signal="pressed" from="UI/Margin/Container/Left/V/IgnoreDeathButtonContainer/IgnoreDeathButton" to="UI/Margin/Container/Left/V/IgnoreDeathButtonContainer/IgnoreDeathButton/Label" method="_on_IgnoreDeathButton_pressed"]
+[connection signal="pressed" from="UI/Margin/Container/Left/V/IgnoreDeathButtonContainer/IgnoreDeathButton" to="Friendlies" method="_on_IgnoreDeathButton_pressed"]
 [connection signal="loaded" from="Friendlies" to="Boss" method="_on_Friendlies_loaded"]
+[connection signal="loaded" from="Friendlies" to="AOEManager" method="_on_Friendlies_loaded"]
 [connection signal="loaded" from="Friendlies/0" to="Friendlies" method="_on_loaded"]
 [connection signal="loaded" from="Friendlies/1" to="Friendlies" method="_on_loaded"]
 [connection signal="loaded" from="Friendlies/2" to="Friendlies" method="_on_loaded"]
@@ -538,15 +538,7 @@ script = ExtResource( 32 )
 [connection signal="loaded" from="Friendlies/5" to="Friendlies" method="_on_loaded"]
 [connection signal="loaded" from="Friendlies/6" to="Friendlies" method="_on_loaded"]
 [connection signal="loaded" from="Friendlies/7" to="Friendlies" method="_on_loaded"]
-[connection signal="apply_effect" from="ScriptManager" to="Friendlies" method="_on_apply_effect"]
-[connection signal="apply_status" from="ScriptManager" to="Status/HBoxContainer" method="_on_apply_status"]
-[connection signal="apply_status" from="ScriptManager" to="Friendlies" method="_on_apply_status"]
 [connection signal="boss_cast" from="ScriptManager" to="UI/Margin/Container/Center/BossDetails/BossCastBar" method="_on_ScriptManager_boss_cast"]
-[connection signal="mech_started" from="ScriptManager" to="UI/Margin/Container/Left/Menu/DetailsContainer/VBoxContainer/Mech" method="_on_ScriptManager_mech_started"]
-[connection signal="remove_effect" from="ScriptManager" to="Friendlies" method="_on_remove_effect"]
-[connection signal="remove_status" from="ScriptManager" to="Status/HBoxContainer" method="_on_remove_status"]
-[connection signal="remove_status" from="ScriptManager" to="Friendlies" method="_on_remove_status"]
-[connection signal="remove_status_all" from="ScriptManager" to="Status/HBoxContainer" method="_on_remove_status_all"]
-[connection signal="remove_status_all" from="ScriptManager" to="Friendlies" method="_on_remove_status_all"]
-[connection signal="reset" from="ScriptManager" to="AOEManager" method="_on_reset"]
+[connection signal="mech_started" from="ScriptManager" to="UI/Margin/Container/Left/V/M3/V/Mech" method="_on_ScriptManager_mech_started"]
 [connection signal="reset" from="ScriptManager" to="Friendlies" method="_on_reset"]
+[connection signal="reset" from="ScriptManager" to="AOEManager" method="_on_reset"]

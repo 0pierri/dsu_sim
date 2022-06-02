@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/fireresdown.png-d26a023465c4d10bb40f953f499aa4a2.stex"
+path="res://.import/vuln_fire.png-3c5df40cf16b4d6c7188ec413aeb360c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/status/fireresdown.png"
-dest_files=[ "res://.import/fireresdown.png-d26a023465c4d10bb40f953f499aa4a2.stex" ]
+source_file="res://textures/status/vuln_fire.png"
+dest_files=[ "res://.import/vuln_fire.png-3c5df40cf16b4d6c7188ec413aeb360c.stex" ]
 
 [params]
 

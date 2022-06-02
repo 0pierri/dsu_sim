@@ -1,34 +1,33 @@
 extends HBoxContainer
+class_name PlayerStatuses
 
-onready var TextureLoader = get_node("/root/Game/TextureLoader")
 var PlayerStatus = preload("res://scenes/PlayerStatus.tscn")
 var statuses = {}
 
-func _on_apply_status(status: String, player: String, duration: float, show_timer: bool):
-	if player == "0":
-		var s = PlayerStatus.instance()
-		s.name = status
-		s.set_timer(duration)
-		s.set_timer_shown(show_timer)
-		s.set_texture(TextureLoader.get("tex_" + status))
-		statuses[status] = s
-		add_child(s)
-		
-		yield(get_tree().create_timer(duration), "timeout")
-		
-		statuses.erase(status)
-		if is_instance_valid(s) and not s.is_queued_for_deletion():
-			s.queue_free()
+onready var TL = get_node("/root/Game/TextureLoader") as TextureLoader
 
-func _on_remove_status(status: String, player: String):
-	if player == "0":
-		var s = statuses.get(status)
-		statuses.erase(status)
+func apply_status(status: String, duration: float, show_timer: bool):
+	var s = PlayerStatus.instance()
+	s.name = status
+	s.set_timer(duration)
+	s.set_timer_shown(show_timer)
+	s.set_texture(TL.get(status))
+	statuses[status] = s
+	add_child(s)
+	
+	yield(get_tree().create_timer(duration), "timeout")
+	
+	statuses.erase(status)
+	if is_instance_valid(s) and not s.is_queued_for_deletion():
 		s.queue_free()
 
-func _on_remove_status_all(player: String):
-		if player == "0":
-			for s in statuses.values():
-				statuses.erase(s.name)
-				if is_instance_valid(s) and not s.is_queued_for_deletion():
-					s.queue_free()
+func remove_status(status: String):
+	var s = statuses.get(status)
+	statuses.erase(status)
+	remove_child(s)
+	if is_instance_valid(s) and not s.is_queued_for_deletion():
+		s.queue_free()
+
+func remove_status_all():
+	for s in statuses.keys():
+		remove_status(s)
